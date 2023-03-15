@@ -1,9 +1,8 @@
 export default ({ recipe }) => {
     return (
         <>
-            <div className="container my-2 border border-dard rounded">
-                <div className="row">
-                    <div className="col" />
+            <div className="recipeCard container my-2 border border-dark rounded">
+                <div className="row justify-content-center">
                     <div className="col-10">
                         <h2 className="my-3">{recipe.title}</h2>
                         <p className="lead">{recipe.description}</p>
@@ -29,7 +28,6 @@ export default ({ recipe }) => {
                                     <p>{recipe.instructions}</p></div> : <div></div>}
                         </div>
                     </div>
-                    <div className="col" />
                 </div>
             </div>
         </>

@@ -1,11 +1,14 @@
-import RecipeCard from "./RecipeCard";
+import RecipeListItem from "./RecipeListItem";
 
 export default ({ recipes }) => {
     return (
         <>
-            <div className="recipeContainer">
-                <h1 className="my-4">Recipes</h1>
-                {recipes.map((recipe, index) => <RecipeCard key={index} recipe={recipe} />)}
+            <div className="recipeContainer container">
+                <div className="row justify-content-center">
+                    <div className="col-10">
+                        {recipes.map((recipe, index) => <RecipeListItem key={index} recipe={recipe} />)}
+                    </div>
+                </div>
             </div>
         </>
     );
