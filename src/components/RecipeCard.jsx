@@ -1,35 +1,61 @@
-export default ({ recipe }) => {
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import useContentful from "./../services/useContentful.jsx";
+
+export default () => {
+    const { id } = useParams();
+    const [loading, setLoading] = useState(true);
+    const [recipe, setRecipe] = useState();
+    const { getRecipeDetails } = useContentful();
+
+    useEffect(() => {
+        setLoading(true);
+        getRecipeDetails(id).then((response) => {
+            setRecipe(response);
+            setLoading(false);
+        });
+    }, [id]);
+
     return (
         <>
-            <div className="recipeCard container my-2 border border-dark rounded">
-                <div className="row justify-content-center">
-                    <div className="col-10">
-                        <h2 className="my-3">{recipe.title}</h2>
-                        <p className="lead">{recipe.description}</p>
-                        <div className="container">
-                            <div className="row align-items-center text-start">
-                                <div className="col-8">
-                                    <img src={recipe.image.file.url} alt={recipe.title} />
+            {loading ?
+                (
+                    // todo: replace with Loader component
+                    <div>loading...</div>
+                )
+                :
+                (
+                    <div className="recipeCard container my-2 border border-dark rounded">
+                        <div className="row justify-content-center">
+                            <div className="col-md-10 col-12">
+                                <h2 className="my-3">{recipe.title}</h2>
+                                <p className="lead">{recipe.description}</p>
+                                <div className="container">
+                                    <div className="row align-items-center text-start">
+                                        <div className="col-7">
+                                            <img src={recipe.image.file.url} alt={recipe.title} />
+                                        </div>
+                                        <div className="col fs-4">
+                                            <div><span className="fw-semibold">Kitchen: </span><span>{recipe.kitchen}</span></div>
+                                            <div><span className="fw-semibold">Servings: </span><span>{recipe.servings}</span></div>
+                                            <div><span className="fw-semibold">Time: </span><span> {recipe.time} minutes</span></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="col-4 fs-4">
-                                    <div><span className="fw-semibold">Kitchen: </span><span>{recipe.kitchen}</span></div>
-                                    <div><span className="fw-semibold">Servings: </span><span>{recipe.servings}</span></div>
-                                    <div><span className="fw-semibold">Time: </span><span> {recipe.time} minutes</span></div>
+                                <div className="mx-5 my-3 text-start">
+                                    <h4>Ingredients</h4>
+                                    <ul>
+                                        {recipe.ingredients.map(ingredient => <li>{ingredient}</li>)}
+                                    </ul>
+                                    {
+                                        recipe.instructions ? <div><h4 className="my-2">Instructions</h4>
+                                            <p>{recipe.instructions}</p></div> : <div></div>}
                                 </div>
                             </div>
                         </div>
-                        <div className="mx-5 my-3 text-start">
-                            <h4 >Ingredients</h4>
-                            <ul>
-                                {recipe.ingredients.map(ingredient => <li>{ingredient}</li>)}
-                            </ul>
-                            {
-                                recipe.instructions ? <div><h4 className="my-2">Instructions</h4>
-                                    <p>{recipe.instructions}</p></div> : <div></div>}
-                        </div>
                     </div>
-                </div>
-            </div>
+                )
+            }
         </>
     );
 }

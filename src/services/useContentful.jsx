@@ -10,6 +10,8 @@ const useContentful = () => {
     host: "preview.contentful.com",
   });
 
+  // fetch recipes matching the title
+  // fetch all, if none specified
   const getRecipes = async (title) => {
     try {
       const entries = await client.getEntries({
@@ -21,38 +23,49 @@ const useContentful = () => {
         //"fields.categories.sys.id": category
       });
 
+      //console.log(entries);
       return sanitizeEntries(entries);
     } catch (error) {
       console.log("Error fetching recipes: " + error);
     }
   }
 
+  // get recipe for specified ID
+  const getRecipeDetails = async (id) => {
+    try {
+      const entry = await client.getEntry(id);
+      
+      return sanitizeEntry(entry);
+    } catch (error) {
+      console.log("Error fetching specific recipe: " + error);
+    }
+  }
+
+  // helper function 
+  const sanitizeEntry = (entry) => {
+    const image = entry.fields.image.fields;
+    return {
+      ...entry.fields,
+      image
+    };
+  };
+
   // helper function 
   const sanitizeEntries = (entries) => {
     const sanitizedEntries = entries.items.map((item) => {
       const image = item.fields.image.fields;
+      const sys_id = item.sys.id;
 
+      // replace image and append sys_id
       return {
         ...item.fields,
-        image
+        image, sys_id
       };
     });
     return sanitizedEntries;
   }
 
-  return { getRecipes };
+  return { getRecipes, getRecipeDetails };
 };
 
 export default useContentful;
-
-// Example code from platform:
-// const client = contentful.createClient({
-//   space: 'gkpegdy872u1',
-//   environment: 'master', // defaults to 'master' if not set
-//   accessToken: 'kIkMfUwdndXQl9O_Ehc2bpDzOdyCMAydnfir6KbVrGk'
-// })
-
-// get specific entry:
-// client.getEntry('7i5fyWcCWL4lQvVC9p3BY8')
-//   .then((entry) => console.log(entry))
-//   .catch(console.error)
