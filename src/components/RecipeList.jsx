@@ -6,7 +6,7 @@ export default ({ recipes }) => {
         <>
             <div className="recipeContainer container">
                 <div className="row justify-content-center">
-                    <div className="col-10">
+                    <div className="col-sm-12 col-lg-10">
                         {recipes.map((recipe, index) => <RecipeListItem key={index} recipe={recipe} />)}
                     </div>
                 </div>

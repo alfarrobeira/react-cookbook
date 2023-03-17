@@ -7,7 +7,7 @@ export default ({ recipe }) => {
             <div className="recipeListItem container my-1 p-1 border border-black-50">
                 <Link className="text-decoration-none text-reset" to={`/recipes/${recipe.sys_id}`} >   
                     <div className="row align-items-center text-start">
-                        <div className="col-2">
+                        <div className="col-sm-4 col-xl-2">
                             <img src={recipe.image.file.url} alt={recipe.title} />
                         </div>
                         <div className="col">

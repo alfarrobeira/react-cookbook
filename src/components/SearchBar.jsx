@@ -15,21 +15,24 @@ const SearchBar = ({ setSearchQuery }) => {
     }
 
     return (
-        <form className="my-2" onSubmit={handleSubmit}>
-            <TextField
-                id="search-bar"
-                className="text"
-                label="Search"
-                variant="outlined"
-                placeholder="Search for recipes..."
-                size="small"
-                sx={{ width: '40ch' }}
-                onInput={(e) => queryRef.current = (e.target.value)}
-            />
-            <IconButton type="submit" aria-label="search">
-                <SearchIcon style={{ fill: "dodgerblue" }} />
-            </IconButton>
-        </form>);
+        <>
+            <form className="mb-3" onSubmit={handleSubmit}>
+                <TextField
+                    id="search-bar"
+                    className="text"
+                    label="Search"
+                    variant="outlined"
+                    placeholder="Search for recipes..."
+                    size="small"
+                    sx={{ width: '40ch' }}
+                    onInput={(e) => queryRef.current = (e.target.value)}
+                />
+                <IconButton type="submit" aria-label="search">
+                    <SearchIcon style={{ fill: "dodgerblue" }} />
+                </IconButton>
+            </form>
+        </>
+    );
 };
 
 export default SearchBar;
