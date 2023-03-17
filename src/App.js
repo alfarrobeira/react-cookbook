@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Link, Routes, Route } from "react-router-dom";
 import useContentful from "./services/useContentful.jsx";
 import RecipeList from "./components/RecipeList.jsx";
 import RecipeCard from "./components/RecipeCard.jsx";
@@ -20,10 +20,10 @@ function App() {
   }, [searchQuery]);
 
   return <div className="App">
-    <h1 className="my-4">Cookbook</h1>
+    <Link to="/" className="text-decoration-none text-reset"><h1 className="my-4">Cookbook</h1></Link>
     <SearchBar setSearchQuery={setSearchQuery} />
     <Routes>
-      <Route path="/" element={ <RecipeList recipes={recipes} /> } />
+      <Route path="/" element={ <div /> } />
       <Route path="recipes" element={ <RecipeList recipes={recipes} /> } />
       <Route path="recipes/:id" element={ <RecipeCard /> } />
     </Routes>

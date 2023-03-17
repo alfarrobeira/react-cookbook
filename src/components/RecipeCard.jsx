@@ -28,6 +28,7 @@ export default () => {
                     <div className="recipeCard container my-2 border border-dark rounded">
                         <div className="row justify-content-center">
                             <div className="col-md-10 col-12">
+                                {/* title and description are mandatory in the CSS, so it is safe to display without checking */}
                                 <h2 className="my-3">{recipe.title}</h2>
                                 <p className="lead">{recipe.description}</p>
                                 <div className="container">
@@ -36,9 +37,10 @@ export default () => {
                                             <img src={recipe.image.file.url} alt={recipe.title} />
                                         </div>
                                         <div className="col fs-4">
-                                            <div><span className="fw-semibold">Kitchen: </span><span>{recipe.kitchen}</span></div>
-                                            <div><span className="fw-semibold">Servings: </span><span>{recipe.servings}</span></div>
-                                            <div><span className="fw-semibold">Time: </span><span> {recipe.time} minutes</span></div>
+                                            {/* handle emptry entries: display only, if content available */}
+                                            {recipe.kitchen ? <div><span className="fw-semibold">Kitchen: </span><span>{recipe.kitchen}</span></div> : <div /> }
+                                            {recipe.servings ? <div><span className="fw-semibold">Servings: </span><span>{recipe.servings}</span></div> : <div /> }
+                                            {recipe.time ? <div><span className="fw-semibold">Time: </span><span> {recipe.time} minutes</span></div> : <div /> }
                                         </div>
                                     </div>
                                 </div>

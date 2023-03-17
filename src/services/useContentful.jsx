@@ -43,7 +43,9 @@ const useContentful = () => {
 
   // helper function 
   const sanitizeEntry = (entry) => {
-    const image = entry.fields.image.fields;
+    //const image = entry.fields.image.fields;
+    // handle empty images
+    const image = entry.fields.image !== undefined ? entry.fields.image.fields : { file: {url: "https://via.placeholder.com/220x150/efefef/efefef"}, title: ""};
     return {
       ...entry.fields,
       image
@@ -53,7 +55,8 @@ const useContentful = () => {
   // helper function 
   const sanitizeEntries = (entries) => {
     const sanitizedEntries = entries.items.map((item) => {
-      const image = item.fields.image.fields;
+      // handle empty images
+      const image = item.fields.image !== undefined ? item.fields.image.fields : { file: {url: "https://via.placeholder.com/220x150/efefef/efefef"}, title: ""};
       const sys_id = item.sys.id;
 
       // replace image and append sys_id
